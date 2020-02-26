@@ -11,8 +11,8 @@ let app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
   antialias: true,
-  autoResize: true
-  // transparent: true
+  autoResize: true,
+  transparent: true
 });
 document.body.appendChild(app.view);
 
