@@ -46,9 +46,10 @@ loader
     });
     console.log(asteroids);
     //all the sprites are spawned but next line(for movng them doesnt work)
-    app.ticker.add(() =>
-      tickerFunc(asteroids.spriteMap, asteroids.spriteBounds)
-    );
+    app.ticker.add(() => {
+      tickerFunc(asteroids.spriteMap, asteroids.spriteBounds);
+      tickerFunc(comets.spriteMap, comets.spriteBounds);
+    });
   });
 
 loader.onProgress.add((loader, resource) =>
