@@ -45,5 +45,7 @@ loader.onComplete.add((loader, resources) =>
 );
 
 
-let dict = spawnSprite(app, "assets/asteroid.png", 15,1,1);
+let dict = spawnS prite(app, "assets/asteroid.png", 15,1,1);
+
+//all the sprites are spawned but next line(for movng them doesnt work)
 app.ticker.add(tickerFunc(dict["spriteMap"],dict["spriteBounds"]));
