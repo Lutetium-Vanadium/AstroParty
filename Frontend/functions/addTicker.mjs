@@ -19,10 +19,7 @@ export const tickerFunc = (spriteMap, spriteBounds) => {
     }
   }
 
-  return {
-    spriteMap,
-    spriteBounds
-  };
+  
 };
 
 //clean code be like
