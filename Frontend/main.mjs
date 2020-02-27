@@ -47,6 +47,6 @@ loader.onComplete.add((loader, resources) =>
 
 let dictAsteroids = spawnSprite(app, "assets/asteroid.png", 15,1,1);
 let dictComets = spawnSprite(app, "assets/comet.png", 15,1,1);
-console.log(dictAsteroids);
+console.log("dictAsteroids",dictAsteroids);
 //all the sprites are spawned but next line(for movng them doesnt work)
 app.ticker.add(tickerFunc(dictAsteroids["spriteMap"],dictAsteroids["spriteBounds"]));
