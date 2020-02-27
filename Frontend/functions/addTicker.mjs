@@ -23,10 +23,6 @@ export const tickerFunc =  (spriteMap,spriteBounds) => {
             }
         }
 
-        return {
-            "spriteMap": spriteMap,
-            "spriteBounds":spriteBounds
-        }
         
 
 
