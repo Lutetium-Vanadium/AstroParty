@@ -1,4 +1,5 @@
 /**
+ * spawnSprite()
  *
  * @param app PIXI.app
  * @param texture The texture for the file
