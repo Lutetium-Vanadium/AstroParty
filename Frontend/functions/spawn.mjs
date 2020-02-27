@@ -1,65 +1,70 @@
-export const spawnSprite = (app,fileName,numberSprites, isMoving = 0, isTint = 0) =>
-{
+/**
+ *
+ * @param app PIXI.app
+ * @param texture The texture for the file
+ * @param options Specific Options
+ */
+export const spawnSprite = (
+  app,
+  texture,
+  { totalSprites = 1, isMoving = false, isTint = false }
+) => {
+  // let dict = {};
+  // let posSprite = []
+  // let tint = null;
+  // let direction = null;
+  // let turningSpeed = null;
+  // let speed = null;
 
-    // let dict = {};
-    // let posSprite = []
-    // let tint = null;
-    // let direction = null;
-    // let turningSpeed = null;
-    // let speed = null;
+  // for(let i = 0; i<number; i++){
+  //    posSprite.push([Math.random() * screenX, Math.radnom()*screenY]);
+  // }
 
-    // for(let i = 0; i<number; i++){
-    //    posSprite.push([Math.random() * screenX, Math.radnom()*screenY]);
-    // }
-     
-    // if(isTint){
-    //    tint = Math.random() * 0xFFFFFF;
-    // }
+  // if(isTint){
+  //    tint = Math.random() * 0xFFFFFF;
+  // }
 
-    // if(isMoving){
-    //     direction = Math.random() * Math.PI * 2;
-    //     turningSpeed = Math.random() - 0.8;
-    //     speed = 2 + Math.random() * 2;
-    // }
+  // if(isMoving){
+  //     direction = Math.random() * Math.PI * 2;
+  //     turningSpeed = Math.random() - 0.8;
+  //     speed = 2 + Math.random() * 2;
+  // }
 
-    const spriteMap = [];
+  const spriteMap = [];
 
-    const totalSprites = numberSprites;
+  for (let i = 0; i < totalSprites; i++) {
+    const sprite = new PIXI.Sprite(texture);
 
+    sprite.scale.set(0.4 + (Math.random() / 10) * 0.1);
 
-    for (let i = 0; i < totalSprites; i++) {
-        
-        const sprite = PIXI.Sprite.from(fileName);
+    sprite.x = Math.random() * app.screen.width;
+    sprite.y = Math.random() * app.screen.height;
 
-        sprite.scale.set(0.4 + Math.random()/10 * 0.1);
+    sprite.tint = Math.random() * 0xffffff;
 
-        sprite.x = Math.random() * app.screen.width;
-        sprite.y = Math.random() * app.screen.height;
+    sprite.direction = Math.random() * Math.PI * 2;
 
-        sprite.tint = Math.random() * 0xFFFFFF;
+    sprite.turningSpeed = Math.random() - 0.8;
 
-        sprite.direction = Math.random() * Math.PI * 2;
+    sprite.speed = 2 + Math.random() * 2;
 
-        sprite.turningSpeed = Math.random() - 0.8;
+    spriteMap.push(sprite);
 
-        sprite.speed = 2 + Math.random() * 2;
+    app.stage.addChild(sprite);
+  }
 
-        spriteMap.push(sprite);
+  const padding = 100;
+  const spriteBounds = new PIXI.Rectangle(
+    -padding,
+    -padding,
+    app.screen.width + padding * 2,
+    app.screen.height + padding * 2
+  );
 
-        app.stage.addChild(sprite);
-    }
-
-    const spriteBoundsPadding = 100;
-    const spriteBounds = new PIXI.Rectangle(-spriteBoundsPadding,
-        -spriteBoundsPadding,
-        app.screen.width + spriteBoundsPadding * 2,
-        app.screen.height + spriteBoundsPadding * 2);
-
-    return {
-        "spriteMap" :spriteMap,
-        "spriteBounds" : spriteBounds
-    }
-
-}
+  return {
+    spriteMap,
+    spriteBounds
+  };
+};
 
 //returns spriteMap and sprteBounds
