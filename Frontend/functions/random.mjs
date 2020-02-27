@@ -6,3 +6,7 @@ export const randint = (min, max = null) => {
 
   return Math.floor(Math.random() * (max - min)) + min;
 };
+
+export const choice = arr => {
+  return arr[Math.floor(randint(arr.length))];
+};

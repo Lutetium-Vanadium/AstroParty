@@ -1,3 +1,6 @@
+const PLAYER_SPEED = 3;
+const PLAYER_HEIGHT = 50;
+
 /**
  * spawnSprite()
  *
@@ -54,18 +57,22 @@ export const spawnSprite = (
     app.stage.addChild(sprite);
   }
 
-  const padding = 100;
-  const spriteBounds = new PIXI.Rectangle(
-    -padding,
-    -padding,
-    app.screen.width + padding * 2,
-    app.screen.height + padding * 2
-  );
-
-  return {
-    spriteMap,
-    spriteBounds
-  };
+  return spriteMap;
 };
 
-//returns spriteMap and sprteBounds
+export const spawnPlayer = (app, texture) => {
+  const player = new PIXI.Sprite(texture);
+
+  player.x = Math.random() * app.screen.width;
+  player.y = Math.random() * app.screen.height;
+
+  player.scale.set(PLAYER_HEIGHT / texture.orig.height);
+
+  player.direction = Math.random() * Math.PI * 2;
+  player.turningSpeed = 0;
+  player.speed = PLAYER_SPEED;
+
+  app.stage.addChild(player);
+
+  return player;
+};
