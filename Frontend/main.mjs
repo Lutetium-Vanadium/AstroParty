@@ -38,3 +38,4 @@ loader.onProgress.add((loader, resource) =>
 loader.onComplete.add((loader, resources) =>
   console.log("Complete", { progress: loader.progress, loader, resources })
 );
+//yee
