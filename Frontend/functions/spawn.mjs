@@ -1,4 +1,4 @@
-export const spawnSprite = (app,fileName,numberSprites,screenX,screenY, isMoving = 0, isTint = 0) =>
+export const spawnSprite = (app,fileName,numberSprites, isMoving = 0, isTint = 0) =>
 {
 
     // let dict = {};
@@ -50,11 +50,16 @@ export const spawnSprite = (app,fileName,numberSprites,screenX,screenY, isMoving
     }
 
     const spriteBoundsPadding = 100;
-    const dudeBounds = new PIXI.Rectangle(-spriteBoundsPadding,
+    const spriteBounds = new PIXI.Rectangle(-spriteBoundsPadding,
         -spriteBoundsPadding,
         app.screen.width + spriteBoundsPadding * 2,
         app.screen.height + spriteBoundsPadding * 2);
 
+    return {
+        "spriteMap" :spriteMap,
+        "spriteBounds" : spriteBounds
+    }
+
 }
 
-//returns scale, lst of pos, tints, velocities, look at ti comment
+//returns spriteMap and sprteBounds
