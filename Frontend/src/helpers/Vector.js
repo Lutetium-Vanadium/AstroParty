@@ -9,7 +9,7 @@ class Vector {
   }
 
   get magnitude() {
-    return Math.sqrt(x * x + y * y);
+    return Math.sqrt(this.x * this.x + this.y * this.y);
   }
   set magnitude(magnitude) {
     this.x = Math.cos(this.angle) * magnitude;
@@ -27,13 +27,17 @@ class Vector {
   }
 
   static fromVector(vector) {
-    this.x = vector.x;
-    this.y = vector.y;
+    return new this(vector.x, vector.y);
   }
 
   static fromPolar(magnitude, angle) {
-    this.angle = angle;
-    this.magnitude = magnitude;
+    const x = Math.cos(angle) * magnitude;
+    const y = Math.sin(angle) * magnitude;
+    return new this(x, y);
+  }
+
+  static null() {
+    return new this(0, 0);
   }
 
   // Vector based functions

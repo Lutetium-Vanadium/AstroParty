@@ -1,9 +1,7 @@
 import Sprite from "./Sprite";
 import Vector from "./Vector";
 
-const PLAYER_HEIGHT = 50;
-
-class Player extends Sprite {
+class Entity extends Sprite {
   constructor(
     texture,
     pos = [0, 0],
@@ -18,9 +16,9 @@ class Player extends Sprite {
 
     super(texture, posVec, velVec, accVec, omega, 0, decay);
 
-    this.isPlayer = true;
-    this.sprite.scale.set(PLAYER_HEIGHT / texture.orig.height);
+    this.isPlayer = false;
+    this.sprite.scale.set(0.4 + (Math.random() / 10) * 0.1);
   }
 }
 
-export default Player;
+export default Entity;

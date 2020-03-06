@@ -1,7 +1,8 @@
-import * as PIXI from "pixi.js";
+import Player from "../helpers/Player";
+import { randint } from "../functions/random";
+import Entity from "../helpers/Entity";
 
 const PLAYER_SPEED = 3;
-const PLAYER_HEIGHT = 50;
 
 /**
  * spawnSprite()
@@ -39,26 +40,18 @@ export const spawnSprite = (
   const spriteMap = [];
 
   for (let i = 0; i < totalSprites; i++) {
-    const sprite = new PIXI.Sprite(texture);
+    const pos = [randint(app.screen.width), randint(app.screen.height)];
+    const velMag = 2 + Math.random() * 2;
+    const angle = Math.random() * Math.PI * 2;
+    const omega = (Math.random() - 0.8) * 0.01;
 
-    sprite.scale.set(0.4 + (Math.random() / 10) * 0.1);
+    const sprite = new Entity(texture, pos, velMag, angle, omega);
 
-    sprite.x = Math.random() * app.screen.width;
-    sprite.y = Math.random() * app.screen.height;
-
-    sprite.tint = Math.random() * 0xffffff;
-
-    sprite.omega = 0;
-
-    sprite.direction = Math.random() * Math.PI * 2;
-
-    sprite.turningSpeed = Math.random() - 0.8;
-
-    sprite.speed = 2 + Math.random() * 2;
+    sprite.sprite.tint = Math.random() * 0xffffff;
 
     spriteMap.push(sprite);
 
-    app.stage.addChild(sprite);
+    app.stage.addChild(sprite.sprite);
   }
 
   console.log({ spriteMap, app });
@@ -66,23 +59,14 @@ export const spawnSprite = (
 };
 
 export const spawnPlayer = (app, texture) => {
-  const player = new PIXI.Sprite(texture);
+  // const player = new PIXI.Sprite(texture);
 
-  player.x = Math.random() * app.screen.width;
-  player.y = Math.random() * app.screen.height;
+  const pos = [randint(app.screen.width), randint(app.screen.height)];
+  const angle = Math.random() * Math.PI * 2;
+  const omega = 0.005;
 
-  player.scale.set(PLAYER_HEIGHT / texture.orig.height);
+  const player = new Player(texture, pos, PLAYER_SPEED, angle, omega);
+  app.stage.addChild(player.sprite);
 
-  player.direction = Math.random() * Math.PI * 2;
-  player.turningSpeed = 0;
-  player.speed = PLAYER_SPEED;
-
-  player.omega = 0.005;
-
-  player.isPlayer = true;
-
-  app.stage.addChild(player);
-
-  console.log({ player, app, add: app.stage.addChild });
   return player;
 };
