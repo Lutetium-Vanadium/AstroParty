@@ -43,7 +43,7 @@ export const spawnSprite = (
     const pos = [randint(app.screen.width), randint(app.screen.height)];
     const velMag = 2 + Math.random() * 2;
     const angle = Math.random() * Math.PI * 2;
-    const omega = (Math.random() - 0.8) * 0.01;
+    const omega = (Math.random() - 0.8) * 0.1;
 
     const sprite = new Entity(texture, pos, velMag, angle, omega);
 
@@ -54,7 +54,6 @@ export const spawnSprite = (
     app.stage.addChild(sprite.sprite);
   }
 
-  console.log({ spriteMap, app });
   return spriteMap;
 };
 
@@ -63,7 +62,7 @@ export const spawnPlayer = (app, texture) => {
 
   const pos = [randint(app.screen.width), randint(app.screen.height)];
   const angle = Math.random() * Math.PI * 2;
-  const omega = 0.005;
+  const omega = 0;
 
   const player = new Player(texture, pos, PLAYER_SPEED, angle, omega);
   app.stage.addChild(player.sprite);

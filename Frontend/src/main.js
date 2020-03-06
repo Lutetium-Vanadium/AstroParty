@@ -53,16 +53,16 @@ loader
   .add("banana", require("./assets/bananas.svg"))
   .add("comet", require("./assets/comet.png"))
   .load((loader, resources) => {
-    const asteroids = spawnSprite(app, resources.asteroid.texture, {
-      totalSprites: 15,
-      isMoving: true,
-      isTint: true
-    });
-    const comets = spawnSprite(app, resources.comet.texture, {
-      totalSprites: 15,
-      isMoving: true,
-      isTint: true
-    });
+    // const asteroids = spawnSprite(app, resources.asteroid.texture, {
+    //   totalSprites: 15,
+    //   isMoving: true,
+    //   isTint: true
+    // });
+    // const comets = spawnSprite(app, resources.comet.texture, {
+    //   totalSprites: 15,
+    //   isMoving: true,
+    //   isTint: true
+    // });
 
     // Make a player sprite (with a random colour for now)
     const player = spawnPlayer(app, resources[choice(shipCols)].texture);
@@ -72,10 +72,10 @@ loader
     playerKeyboard.press = key => {
       switch (key) {
         case "ArrowLeft":
-          player.turningSpeed += 0.02;
+          player.omega -= 0.05;
           break;
         case "ArrowRight":
-          player.turningSpeed -= 0.02;
+          player.omega += 0.05;
           break;
         default:
           console.error(key, "not found.");
@@ -83,9 +83,13 @@ loader
       }
     };
 
-    app.ticker.maxFPS = 30;
+    playerKeyboard.release = () => {
+      player.omega = 0;
+    };
+
+    app.ticker.maxFPS = 60;
     app.ticker.add(() => {
-      tickerFunc([player, ...asteroids, ...comets], bounds, app);
+      tickerFunc([player], bounds);
     });
   });
 

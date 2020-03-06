@@ -1,7 +1,7 @@
 import Sprite from "./Sprite";
 import Vector from "./Vector";
 
-const PLAYER_HEIGHT = 50;
+const PLAYER_HEIGHT = window.innerWidth / 13;
 
 class Player extends Sprite {
   constructor(

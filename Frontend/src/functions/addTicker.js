@@ -1,5 +1,5 @@
-export const tickerFunc = (spriteMap, spriteBounds, app) => {
-  //this is a for loop
+export const tickerFunc = (spriteMap, spriteBounds) => {
+
   for (const sprite of spriteMap) {
     sprite.tick(spriteBounds);
 

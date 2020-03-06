@@ -1,11 +1,13 @@
 class Vector {
   // Properties
   get angle() {
-    return Math.atan(this.y / this.x);
+    return Math.atan2(this.y, this.x);
   }
   set angle(angle) {
-    this.x = Math.cos(angle) * this.magnitude;
-    this.y = Math.sin(angle) * this.magnitude;
+    const magnitude = this.magnitude;
+    this.x = Math.cos(angle) * magnitude;
+    this.y = Math.sin(angle) * magnitude;
+    this.magnitude = magnitude;
   }
 
   get magnitude() {
