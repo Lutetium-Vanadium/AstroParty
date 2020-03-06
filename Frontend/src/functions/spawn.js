@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 const PLAYER_SPEED = 3;
 const PLAYER_HEIGHT = 50;
 
@@ -46,6 +48,8 @@ export const spawnSprite = (
 
     sprite.tint = Math.random() * 0xffffff;
 
+    sprite.omega = 0;
+
     sprite.direction = Math.random() * Math.PI * 2;
 
     sprite.turningSpeed = Math.random() - 0.8;
@@ -57,6 +61,7 @@ export const spawnSprite = (
     app.stage.addChild(sprite);
   }
 
+  console.log({ spriteMap, app });
   return spriteMap;
 };
 
@@ -72,7 +77,12 @@ export const spawnPlayer = (app, texture) => {
   player.turningSpeed = 0;
   player.speed = PLAYER_SPEED;
 
+  player.omega = 0.005;
+
+  player.isPlayer = true;
+
   app.stage.addChild(player);
 
+  console.log({ player, app, add: app.stage.addChild });
   return player;
 };

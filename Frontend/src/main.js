@@ -1,7 +1,13 @@
-import { randint, choice } from "./functions/random.mjs";
-import { spawnSprite, spawnPlayer } from "./functions/spawn.mjs";
-import { tickerFunc } from "./functions/addTicker.mjs";
-import keyboard from "./functions/keyboard.mjs";
+import * as PIXI from "pixi.js";
+
+import { randint, choice } from "./functions/random";
+import { spawnSprite, spawnPlayer } from "./functions/spawn";
+import { tickerFunc } from "./functions/addTicker";
+import keyboard from "./functions/keyboard";
+
+import img0 from "./backgrounds/0.jpg";
+import img1 from "./backgrounds/1.jpg";
+import img2 from "./backgrounds/2.jpg";
 
 let type = "WebGL";
 if (!PIXI.utils.isWebGLSupported) {
@@ -10,7 +16,7 @@ if (!PIXI.utils.isWebGLSupported) {
 
 PIXI.utils.sayHello(type);
 
-let app = new PIXI.Application({
+const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
   antialias: true,
@@ -22,7 +28,9 @@ document.body.appendChild(app.view);
 app.renderer.view.style.postion = "absolute";
 app.renderer.view.style.display = "block";
 
-document.getElementById("bg").src = `./backgrounds/${randint(3)}.jpg`;
+const images = [img0, img1, img2];
+
+document.getElementById("bg").src = choice(images);
 
 const loader = new PIXI.Loader();
 
@@ -37,13 +45,13 @@ const bounds = new PIXI.Rectangle(
 );
 
 loader
-  .add("ship/blue", "assets/ship_blue.png")
-  .add("ship/green", "assets/ship_green.png")
-  .add("ship/purple", "assets/ship_purple.png")
-  .add("ship/red", "assets/ship_red.png")
-  .add("asteroid", "assets/asteroid.png")
-  .add("banana", "assets/bananas.svg")
-  .add("comet", "assets/comet.png")
+  .add("ship/blue", require("./assets/ship_blue.png"))
+  .add("ship/green", require("./assets/ship_green.png"))
+  .add("ship/purple", require("./assets/ship_purple.png"))
+  .add("ship/red", require("./assets/ship_red.png"))
+  .add("asteroid", require("./assets/asteroid.png"))
+  .add("banana", require("./assets/bananas.svg"))
+  .add("comet", require("./assets/comet.png"))
   .load((loader, resources) => {
     const asteroids = spawnSprite(app, resources.asteroid.texture, {
       totalSprites: 15,
@@ -64,10 +72,10 @@ loader
     playerKeyboard.press = key => {
       switch (key) {
         case "ArrowLeft":
-          player.direction += 0.06;
+          player.turningSpeed += 0.02;
           break;
         case "ArrowRight":
-          player.direction -= 0.06;
+          player.turningSpeed -= 0.02;
           break;
         default:
           console.error(key, "not found.");
@@ -75,7 +83,9 @@ loader
       }
     };
 
-    app.ticker.add(() => tickerFunc([player], bounds));
+    app.ticker.add(() => {
+      tickerFunc([player, ...asteroids, ...comets], bounds, app);
+    });
   });
 
 loader.onProgress.add((loader, resource) =>
