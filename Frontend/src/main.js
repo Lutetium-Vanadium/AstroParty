@@ -83,6 +83,7 @@ loader
       }
     };
 
+    app.ticker.maxFPS = 30;
     app.ticker.add(() => {
       tickerFunc([player, ...asteroids, ...comets], bounds, app);
     });
