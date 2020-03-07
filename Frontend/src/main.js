@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import { randint, choice } from "./functions/random";
 import { spawnSprite, spawnPlayer } from "./functions/spawn";
 import { tickerFunc } from "./functions/addTicker";
-import keyboard from "./functions/keyboard";
+import InputListener from "./functions/input";
 
 import img0 from "./backgrounds/0.jpg";
 import img1 from "./backgrounds/1.jpg";
@@ -23,6 +23,7 @@ const app = new PIXI.Application({
   autoResize: true,
   transparent: true
 });
+
 document.body.appendChild(app.view);
 
 app.renderer.view.style.postion = "absolute";
@@ -36,6 +37,7 @@ const loader = new PIXI.Loader();
 
 const shipCols = ["ship/blue", "ship/green", "ship/purple", "ship/red"];
 
+const SPEED = 0.03;
 const padding = 0;
 const bounds = new PIXI.Rectangle(
   -padding,
@@ -67,25 +69,38 @@ loader
     // Make a player sprite (with a random colour for now)
     const player = spawnPlayer(app, resources[choice(shipCols)].texture);
 
-    const playerKeyboard = keyboard("ArrowLeft", "ArrowRight");
+    const playerInput = new InputListener("ArrowLeft", "ArrowRight");
 
-    playerKeyboard.press = key => {
-      switch (key) {
-        case "ArrowLeft":
-          player.omega -= 0.05;
-          break;
-        case "ArrowRight":
-          player.omega += 0.05;
-          break;
-        default:
-          console.error(key, "not found.");
-          break;
+    playerInput.trackKeydown(
+      key => {
+        switch (key) {
+          case "ArrowLeft":
+            player.down = -SPEED;
+            break;
+          case "ArrowRight":
+            player.down = SPEED;
+            break;
+          default:
+            console.error(key, "not found.");
+            break;
+        }
+      },
+      () => {
+        player.down = 0;
       }
-    };
-
-    playerKeyboard.release = () => {
-      player.omega = 0;
-    };
+    );
+    playerInput.trackTouch(
+      touchEvt => {
+        if (touchEvt.clientX < window.innerWidth / 2) {
+          player.down = -SPEED;
+        } else {
+          player.down = SPEED;
+        }
+      },
+      () => {
+        player.down = 0;
+      }
+    );
 
     app.ticker.maxFPS = 60;
     app.ticker.add(() => {

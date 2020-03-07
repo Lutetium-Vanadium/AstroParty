@@ -13,6 +13,7 @@ class Sprite {
 
     // Equivalent to friction I guess
     this.decay = decay;
+    this.down = 0;
 
     this.sprite = new PIXI.Sprite(texture);
     this.updateSprite();
@@ -34,6 +35,7 @@ class Sprite {
     this.acc.mult(this.decay);
 
     this.vel.angle += this.omega;
+    this.omega += this.down;
     this.omega *= 0.9;
 
     if (this.pos.x < bounds.x - this.sprite.width) {
